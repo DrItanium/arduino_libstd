@@ -21,6 +21,24 @@
 // simple type_traits implementation
 
 namespace std {
+template<typename T, T v>
+struct integral_constant {
+    using value_type = T;
+    using type = std::integral_constant<T, v>;
+    static constexpr T value = v;
+    constexpr operator value_type() const noexcept { return value; }
+    constexpr value_type operator()() const noexcept { return value; }
+};
+
+using true_type = std::integral_constant<bool, true>;
+using false_type = std::integral_constant<bool, false>;
+
+template<typename T, typename U>
+struct is_same : false_type { };
+
+template<typename T>
+struct is_same<T, T> : true_type { };
+
 template<typename T> struct remove_const { using type = T; };
 template<typename T> struct remove_const<const T> { using type = T; };
 template<typename T> struct remove_volatile { using type = T; };
@@ -40,8 +58,13 @@ using remove_cv_t = typename remove_cv<T>::type;
 
 template<typename T>
 struct is_void : is_same<void, typename remove_cv<T>::type> { };
+
+
 #if __cplusplus >= 201703L
 template<typename T>
 inline constexpr bool is_void_v = is_void<T>::value;
+
+template<typename T, typename U>
+inline constexpr bool is_same_v = is_same<T, U>::value;
 #endif
 } // end namespace std
