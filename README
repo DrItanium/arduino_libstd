@@ -1,0 +1,3 @@
+libstd contains simple implementations of various parts of the c++ standard
+template library. It will _not_ be compliant but good enough to provide missing
+functionality for Arduino projects.
