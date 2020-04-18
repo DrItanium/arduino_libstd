@@ -24,8 +24,72 @@
 #define LIBSTD_SPI_H__
 #include <stddef.h>
 #include <SPI.h>
-namespace std {
+#include <type_traits.h>
+#include <cstdint.h>
+#include <raii.h>
+namespace std::spi {
 
-} // end namespace std
+inline auto transfer(uint8_t value = 0x00) noexcept {
+    return SPI.transfer(value);
+}
+inline auto transfer16(uint16_t value = 0) noexcept {
+    return SPI.transfer16(value);
+}
+template<typename Opcode, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+auto sendOpcode(Opcode opcode) noexcept {
+    return transfer(static_cast<uint8_t>(opcode));
+}
+
+inline void begin() noexcept {
+    SPI.begin();
+}
+
+inline void end() noexcept {
+    SPI.end();
+}
+
+template<int pin>
+using CSPinEnable = std::HoldPinLow<pin>;
+
+// special routines for interfacing with SPI memory devices
+/**
+ * Read a single 8 bit value from a given address
+ * @tparam Opcode the opcode to pull the Read entry from
+ * @tparam cs the chip select pin to pull low for the lifetime of the action
+ */
+template<typename Opcode, int cs, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+inline uint8_t read8(uint32_t address) noexcept {
+    CSPinEnable<cs> holder;
+    sendOpcode(Opcode::Read);
+    // lower 24-bits are used
+    transfer(address >> 16);
+    transfer(address >> 8);
+    transfer(address);
+    return transfer();
+}
+
+template<typename Opcode, int cs, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+inline void singleByteOp(Opcode opcode) noexcept {
+    CSPinEnable<cs> holder;
+    sendOpcode(opcode);
+}
+
+template<typename Opcode, int cs, bool mustEnableWrites = false, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+inline void write8(uint32_t address, uint8_t value) noexcept {
+    if constexpr (mustEnableWrites) {
+        singleByteOp<Opcode, cs>(Opcode::WriteEnable);
+    }
+    CSPinEnable<cs> holder;
+    sendOpcode(Opcode::Write);
+    // lower 24-bits are used for address
+    transfer(address >> 16);
+    transfer(address >> 8);
+    transfer(address);
+    transfer(value);
+}
+
+
+
+} // end namespace std::spi
 
 #endif // end LIBSTD_SPI_H__
