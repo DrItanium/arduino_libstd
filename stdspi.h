@@ -1,6 +1,6 @@
 /**
  * @file
- * standard utility header 
+ * Generic SPI Interface routines
  * @copyright 
  * Copyright (c) 2019-2020, Joshua Scoggins
  * 
@@ -20,16 +20,11 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-#ifndef LIBSTD_UTILITY_H__
-#define LIBSTD_UTILITY_H__
-// basic utility implementation
+#ifndef LIBSTD_SPI_H__
+#define LIBSTD_SPI_H__
+#include <stddef.h>
 namespace std {
-    template<typename T1, typename T2>
-    struct pair {
-        using first_type = T1;
-        using second_type = T2;
-        first_type first;
-        second_type second;
-    };
+
 } // end namespace std
-#endif // end LIBSTD_UTILITY_H__
+
+#endif // end LIBSTD_SPI_H__

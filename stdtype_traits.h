@@ -1,5 +1,8 @@
 /**
- * Copyright (c) 2019, Joshua Scoggins
+ * @file
+ * Type traits impl
+ * @copyright 
+ * Copyright (c) 2019-2020, Joshua Scoggins
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -17,9 +20,13 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-
+#ifndef LIBSTD_TYPE_TRAITS_H__
+#define LIBSTD_TYPE_TRAITS_H__
 // simple type_traits implementation
 #include <libstd.h>
+#ifdef HAS_STL
+#include <limits>
+#else
 namespace std {
 template<typename T, T v>
 struct integral_constant {
@@ -73,5 +80,6 @@ inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 #endif
 #endif
 
-
 } // end namespace std
+#endif // end HAS_STL
+#endif // end LIBSTD_TYPE_TRAITS_H__

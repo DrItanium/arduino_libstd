@@ -1,5 +1,8 @@
 /**
- * Copyright (c) 2019, Joshua Scoggins
+ * @file
+ * basic type decls
+ * @copyright
+ * Copyright (c) 2019-2020, Joshua Scoggins
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -17,7 +20,8 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-
+#ifndef LIBSTD_LIBSTD_H__
+#define LIBSTD_LIBSTD_H__
 #include <stddef.h>
 namespace std {
     using size_t = ::size_t;
@@ -25,3 +29,4 @@ namespace std {
     /// @todo implement std::byte 
 
 } // end namespace std
+#endif // end LIBSTD_LIBSTD_H__
