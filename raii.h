@@ -47,7 +47,7 @@ class PinStateHolder final {
 
 template<int holdState, int restoreState>
 class DynamicPinStateHolder final {
-    DynamicPinStateHolder(int pin) : _pin(pin) noexcept { digitalWrite(_pin, holdState); }
+    DynamicPinStateHolder(int pin) noexcept : _pin(pin) { digitalWrite(_pin, holdState); }
     ~DynamicPinStateHolder() noexcept { digitalWrite(_pin, restoreState); }
     DynamicPinStateHolder(const DynamicPinStateHolder&) = delete;
     DynamicPinStateHolder(DynamicPinStateHolder&&) = delete;
@@ -65,8 +65,8 @@ using HoldPinLow = PinStateHolder<pin, LOW, HIGH>;
 template<int pin>
 using HoldPinHigh = PinStateHolder<pin, HIGH, LOW>;
 
-using DynamicHoldPinLow = PinStateHolder<LOW, HIGH>;
-using DynamicHoldPinHigh = PinStateHolder<HIGH, LOW>;
+using DynamicHoldPinLow = DynamicPinStateHolder<LOW, HIGH>;
+using DynamicHoldPinHigh = DynamicPinStateHolder<HIGH, LOW>;
 } // end namespace std
 
 #endif // end LIBSTD_RAII_H__
