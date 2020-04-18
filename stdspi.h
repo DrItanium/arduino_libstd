@@ -23,6 +23,7 @@
 #ifndef LIBSTD_SPI_H__
 #define LIBSTD_SPI_H__
 #include <stddef.h>
+#include <SPI.h>
 namespace std {
 
 } // end namespace std
