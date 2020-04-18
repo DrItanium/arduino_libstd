@@ -20,8 +20,8 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-#ifndef LIBSTD_SPI_H__
-#define LIBSTD_SPI_H__
+#ifndef LIBSTD_RAII_H__
+#define LIBSTD_RAII_H__
 #include <libstd.h>
 #include "Arduino.h"
 namespace std {
@@ -34,8 +34,8 @@ namespace std {
  */
 template<int pin, int holdState, int restoreState>
 class PinStateHolder final {
-    PinStateHolder() { digitalWrite(pin, holdState); }
-    ~PinStateHolder() { digitalWrite(pin, restoreState); }
+    PinStateHolder() noexcept { digitalWrite(pin, holdState); }
+    ~PinStateHolder() noexcept { digitalWrite(pin, restoreState); }
     PinStateHolder(const PinStateHolder&) = delete;
     PinStateHolder(PinStateHolder&&) = delete;
     PinStateHolder& operator=(const PinStateHolder&) = delete;
@@ -51,4 +51,4 @@ template<int pin>
 using HoldPinHigh = PinStateHolder<pin, HIGH, LOW>;
 } // end namespace std
 
-#endif // end LIBSTD_SPI_H__
+#endif // end LIBSTD_RAII_H__
