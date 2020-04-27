@@ -34,6 +34,7 @@ namespace std {
  */
 template<int pin, int holdState, int restoreState>
 class PinStateHolder final {
+    public:
     PinStateHolder() noexcept { digitalWrite(pin, holdState); }
     ~PinStateHolder() noexcept { digitalWrite(pin, restoreState); }
     PinStateHolder(const PinStateHolder&) = delete;
@@ -47,6 +48,7 @@ class PinStateHolder final {
 
 template<int holdState, int restoreState>
 class DynamicPinStateHolder final {
+    public:
     DynamicPinStateHolder(int pin) noexcept : _pin(pin) { digitalWrite(_pin, holdState); }
     ~DynamicPinStateHolder() noexcept { digitalWrite(_pin, restoreState); }
     DynamicPinStateHolder(const DynamicPinStateHolder&) = delete;

@@ -88,6 +88,23 @@ inline void write8(uint32_t address, uint8_t value) noexcept {
     transfer(value);
 }
 
+/**
+ * RAII class to disable SPI for until the class is deactivated
+ */
+class DisableTemporarily final {
+    public:
+        DisableTemporarily() {
+            SPI.end();
+        }
+        ~DisableTemporarily() {
+            SPI.begin();
+        }
+        DisableTemporarily(const DisableTemporarily&) = delete;
+        DisableTemporarily(DisableTemporarily&&) = delete;
+        DisableTemporarily& operator=(const DisableTemporarily&) = delete;
+        DisableTemporarily& operator=(DisableTemporarily&&) = delete;
+};
+
 
 
 } // end namespace std::spi
