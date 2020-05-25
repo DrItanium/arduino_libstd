@@ -1,3 +1,6 @@
 libstd contains simple implementations of various parts of the c++ standard
 template library. It will _not_ be compliant but good enough to provide missing
 functionality for Arduino projects.
+
+NOTE: On ARM based arduinos provide the STL so the headers in this library will
+include those headers instead
