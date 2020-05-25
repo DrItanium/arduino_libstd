@@ -43,6 +43,14 @@ namespace std {
         denorm_absent        =  0,
         denorm_present       =  1,
     };
+#ifdef min
+#define old_min(a, b) min(a, b)
+#undef min
+#endif
+#ifdef max
+#define old_max(a, b) max(a, b)
+#undef max
+#endif
     template<typename T> 
     class numeric_limits {
         public:
@@ -128,6 +136,14 @@ namespace std {
             static constexpr bool tinyness_before = false;
             static constexpr float_round_style round_style = round_toward_zero;
     };
+#ifdef old_min
+#define min(a, b) old_min(a, b)
+#undef old_min
+#endif
+#ifdef old_max
+#define max(a, b) old_max(a, b)
+#undef old_max
+#endif
     /// @todo implement specializations for the rest of the numerical types
 
 } // end namespace std

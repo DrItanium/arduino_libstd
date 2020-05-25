@@ -57,9 +57,12 @@ using CSPinEnable = std::HoldPinLow<pin>;
  * @tparam Opcode the opcode to pull the Read entry from
  * @tparam cs the chip select pin to pull low for the lifetime of the action
  */
-template<typename Opcode, int cs, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+template<typename Opcode, int cs, uint32_t microsecondDelay = 0, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
 inline uint8_t read8(uint32_t address) noexcept {
     CSPinEnable<cs> holder;
+    if constexpr (microsecondDelay > 0) {
+        delayMicroseconds(microsecondDelay);
+    }
     sendOpcode(Opcode::Read);
     // lower 24-bits are used
     transfer(address >> 16);
@@ -68,18 +71,24 @@ inline uint8_t read8(uint32_t address) noexcept {
     return transfer();
 }
 
-template<typename Opcode, int cs, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+template<typename Opcode, int cs, uint32_t microsecondDelay = 0, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
 inline void singleByteOp(Opcode opcode) noexcept {
     CSPinEnable<cs> holder;
+    if constexpr (microsecondDelay > 0) {
+        delayMicroseconds(microsecondDelay);
+    }
     sendOpcode(opcode);
 }
 
-template<typename Opcode, int cs, bool mustEnableWrites = false, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
+template<typename Opcode, int cs, bool mustEnableWrites = false, uint32_t microsecondDelay = 0, std::enable_if_t<std::is_enum_v<Opcode>, int> = 0>
 inline void write8(uint32_t address, uint8_t value) noexcept {
     if constexpr (mustEnableWrites) {
-        singleByteOp<Opcode, cs>(Opcode::WriteEnable);
+        singleByteOp<Opcode, cs, microsecondDelay>(Opcode::WriteEnable);
     }
     CSPinEnable<cs> holder;
+    if constexpr (microsecondDelay > 0) {
+        delayMicroseconds(10);
+    }
     sendOpcode(Opcode::Write);
     // lower 24-bits are used for address
     transfer(address >> 16);
