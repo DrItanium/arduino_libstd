@@ -2,7 +2,7 @@
  * @file
  * cstdint interface
  * @copyright
- * Copyright (c) 2019-2020, Joshua Scoggins
+ * Copyright (c) 2019-2023, Joshua Scoggins
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,10 +23,6 @@
 
 #ifndef LIBSTD_CSTDINT_H__
 #define LIBSTD_CSTDINT_H__
-#include "platform.h"
-#ifdef HAS_STL
-#include <cstdint>
-#else
 extern "C" {
 #include <stdint.h>
 }
@@ -60,6 +56,5 @@ namespace std {
     using uintmax_t = ::uintmax_t;
     using uintptr_t = ::uintptr_t;
 } // end namespace std
-#endif // end defined(HAS_STL)
 
 #endif // end LIBSTD_CSTDINT_H__

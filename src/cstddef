@@ -2,7 +2,7 @@
  * @file
  * cstddefinterface
  * @copyright
- * Copyright (c) 2019-2020, Joshua Scoggins
+ * Copyright (c) 2019-2023, Joshua Scoggins
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,9 +24,6 @@
 #ifndef LIBSTD_CSTDDEF_H__
 #define LIBSTD_CSTDDEF_H__
 #include "platform.h"
-#ifdef HAS_STL
-#include <cstddef>
-#else
 extern "C" {
 #include <stddef.h>
 }
@@ -105,6 +102,5 @@ namespace std {
         return T(b);
     }
 } // end namespace std
-#endif // end defined(HAS_STL)
 
 #endif // end LIBSTD_CSTDDEF_H__
