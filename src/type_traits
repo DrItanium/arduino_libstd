@@ -3,7 +3,7 @@
  * type_traits interface based off of possible implementation sections at en.cppreference.com
  * and influences from libstdc++ in other cases. 
  * @copyright 
- * Copyright (c) 2019-2020, Joshua Scoggins
+ * Copyright (c) 2019-2023, Joshua Scoggins
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,12 +24,8 @@
 
 #ifndef LIBSTD_TYPE_TRAITS_H__
 #define LIBSTD_TYPE_TRAITS_H__
-#include "platform.h"
 
-#ifdef HAS_STL
-#include <type_traits>
-#else
-#include "cstddef.h"
+#include <cstddef>
 namespace std {
     template<typename T, T v>
     struct integral_constant {
