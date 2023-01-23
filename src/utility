@@ -25,6 +25,11 @@
 // basic utility implementation
 #include <cstdint>
 namespace std {
+    // declval implementation
+    template<typename T, typename U = T&&> U __declval(int);
+    template<typename T> T __declval(long);
+    template<typename T> auto declval() noexcept -> decltype(__declval<T>(0));
+
     template<typename T1, typename T2>
     struct pair {
         using first_type = T1;
