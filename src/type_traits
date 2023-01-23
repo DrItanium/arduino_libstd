@@ -557,8 +557,6 @@ namespace std {
     template<typename T> inline constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
     template<typename T, typename U> struct is_assignable : bool_constant<__is_assignable(T, U)> { };
     template<typename T, typename U> inline constexpr bool is_assignable_v = is_assignable<T, U>::value;
-    /// @todo implement aligned_storage
-    /// @todo implement aligned_union
     /// @todo implement make_signed
     /// @todo implement make_unsigned
     /// @todo implement is_trivially_constructible  and is_nothrow_constructible
@@ -575,7 +573,6 @@ namespace std {
     /// @todo implement is_invocable_r
     /// @todo implement is_nothrow_invocable
     /// @todo implement is_nothrow_invocable_r
-    /// @todo implement common_type
     /// @todo implement invoke_result
 #endif
     namespace details {
@@ -678,6 +675,17 @@ namespace std {
 	template<typename T1, typename T2, typename...R>
 	struct common_type<T1, T2, R...>
 		: detail::common_type_multi_impl<void, T1, T2, R...> { };
+
+/// @todo implement support for is_trivial
+/// @todo implement support for is_trivially_copyable
+/// @todo implement support for is_standard_layout 
+/// @todo implement support for is_empty
+/// @todo implement support for is_polymorphic
+/// @todo implement support for is_abstract
+/// @todo implement support for is_final
+
+
+
 } // end namespace std
 
 #endif // end LIBSTD_TYPE_TRAITS_H__
