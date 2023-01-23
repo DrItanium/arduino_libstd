@@ -55,6 +55,10 @@ namespace std {
     using intptr_t = ::intptr_t;
     using uintmax_t = ::uintmax_t;
     using uintptr_t = ::uintptr_t;
+#ifdef __avr__
+	using int24_t = __int24;
+	using uint24_t = __uint24;
+#endif
 } // end namespace std
 
 #endif // end LIBSTD_CSTDINT_H__

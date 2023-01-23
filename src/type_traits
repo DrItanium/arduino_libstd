@@ -108,6 +108,10 @@ namespace std {
     X(float);
     X(double);
     X(long double);
+#ifdef __avr__
+	X(__int24);
+	X(__uint24);
+#endif
 #undef X
     template<typename T>
     struct is_integral : _IsIntegral<typename remove_cv<T>::type>::type { };
