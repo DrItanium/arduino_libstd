@@ -23,7 +23,6 @@
 
 #ifndef LIBSTD_CSTDDEF_H__
 #define LIBSTD_CSTDDEF_H__
-#include "platform.h"
 extern "C" {
 #include <stddef.h>
 }
